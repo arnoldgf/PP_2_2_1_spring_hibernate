@@ -2,7 +2,6 @@ package hiber.service;
 
 import hiber.dao.UserDao;
 import hiber.model.User;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +39,12 @@ public class UserServiceImp implements UserService {
       session.createQuery("delete from Car").executeUpdate();
       session.createNativeQuery("ALTER TABLE users AUTO_INCREMENT = 1").executeUpdate();
       session.createNativeQuery("ALTER TABLE cars AUTO_INCREMENT = 1").executeUpdate();
+   }
+
+   @Transactional(readOnly = true)
+   @Override
+   public User getUserByCar(String model, int series) {
+      return userDao.getUserByCar(model, series);
    }
 
 }
