@@ -20,6 +20,22 @@ public class UserDaoImp implements UserDao {
    }
 
    @Override
+   public void clearUsers() {
+      sessionFactory.getCurrentSession().createQuery("delete from User").executeUpdate();
+   }
+
+   @Override
+   public void clearCars() {
+      sessionFactory.getCurrentSession().createQuery("delete from Car").executeUpdate();
+   }
+
+   @Override
+   public void resetAutoIncrement(String tableName) {
+      String query = String.format("ALTER TABLE %S AUTO_INCREMENT = 1", tableName);
+      sessionFactory.getCurrentSession().createNativeQuery(query).executeUpdate();
+   }
+
+   @Override
    @SuppressWarnings("unchecked")
    public List<User> listUsers() {
       return sessionFactory.getCurrentSession().createQuery("from User").getResultList();
